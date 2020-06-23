@@ -1,0 +1,9 @@
+name: Habits
+options:
+  bundleIdPrefix: com.qerope
+targets:
+  Habits:
+    type: application
+    platform: iOS
+    deploymentTarget: "13.0"
+    sources: [Habits]
