@@ -8,7 +8,13 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(store.habits) { habit in
-                    Text(habit.name)
+                    Button { store.toggleToday(habit) } label: {
+                        HStack {
+                            Text(habit.name)
+                            Spacer()
+                            if habit.isDone(on: Date()) { Image(systemName: "checkmark.circle.fill") }
+                        }
+                    }
                 }
                 .onDelete(perform: store.delete)
             }
