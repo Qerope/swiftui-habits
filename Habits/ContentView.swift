@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var store: HabitStore
     @State private var showingAdd = false
     @State private var newName = ""
 
