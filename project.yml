@@ -7,3 +7,9 @@ targets:
     platform: iOS
     deploymentTarget: "13.0"
     sources: [Habits]
+  HabitsTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [HabitsTests]
+    dependencies:
+      - target: Habits
