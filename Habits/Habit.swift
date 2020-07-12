@@ -11,6 +11,10 @@ struct Habit: Identifiable, Codable {
 
     func streak(asOf today: Date = Date(), calendar: Calendar = .current) -> Int {
         var day = calendar.startOfDay(for: today)
+        // today not being done yet should not break yesterday's streak
+        if !completions.contains(day) {
+            day = calendar.date(byAdding: .day, value: -1, to: day)!
+        }
         var count = 0
         while completions.contains(day) {
             count += 1

@@ -25,4 +25,11 @@ final class StreakTests: XCTestCase {
         h.completions = [day(0, from: today), day(-2, from: today)]
         XCTAssertEqual(h.streak(asOf: today), 1)
     }
+
+    func testTodayNotDoneKeepsYesterdaysStreak() {
+        let today = Date()
+        var h = Habit(name: "x")
+        h.completions = [day(-1, from: today), day(-2, from: today)]
+        XCTAssertEqual(h.streak(asOf: today), 2)
+    }
 }
