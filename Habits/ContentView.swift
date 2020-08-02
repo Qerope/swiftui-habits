@@ -13,6 +13,8 @@ struct ContentView: View {
                         HStack {
                             Text(habit.name)
                             Spacer()
+                            Text("\(habit.streak())")
+                                .foregroundColor(.secondary)
                             if habit.isDone(on: Date()) { Image(systemName: "checkmark.circle.fill") }
                         }
                     }
