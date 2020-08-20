@@ -1,4 +1,5 @@
 import Foundation
+import UserNotifications
 
 final class HabitStore: ObservableObject {
     @Published var habits: [Habit] = []
@@ -40,5 +41,16 @@ final class HabitStore: ObservableObject {
     func delete(at offsets: IndexSet) {
         habits.remove(atOffsets: offsets)
         save()
+    }
+
+    func scheduleReminder(for habit: Habit, hour: Int) {
+        var comps = DateComponents()
+        comps.hour = hour
+        let content = UNMutableNotificationContent()
+        content.title = habit.name
+        content.body = "Not done yet today"
+        let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+        UNUserNotificationCenter.current().add(
+            UNNotificationRequest(identifier: habit.id.uuidString, content: content, trigger: trigger))
     }
 }
