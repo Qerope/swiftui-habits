@@ -7,6 +7,11 @@ targets:
     platform: iOS
     deploymentTarget: "13.0"
     sources: [Habits]
+  HabitsWidget:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources: [HabitsWidget]
   HabitsTests:
     type: bundle.unit-test
     platform: iOS
