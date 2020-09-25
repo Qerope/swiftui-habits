@@ -3,7 +3,8 @@ import UserNotifications
 
 final class HabitStore: ObservableObject {
     @Published var habits: [Habit] = []
-    private let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    private let url = FileManager.default
+        .containerURL(forSecurityApplicationGroupIdentifier: "group.com.qerope.habits")!
         .appendingPathComponent("habits.json")
 
     init() {
