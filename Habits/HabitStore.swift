@@ -1,5 +1,6 @@
 import Foundation
 import UserNotifications
+import WidgetKit
 
 final class HabitStore: ObservableObject {
     @Published var habits: [Habit] = []
@@ -21,6 +22,7 @@ final class HabitStore: ObservableObject {
         if let data = try? JSONEncoder().encode(habits) {
             try? data.write(to: url, options: .atomic)
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func add(_ name: String) {
