@@ -1,6 +1,7 @@
 import Foundation
 import UserNotifications
 import WidgetKit
+import UIKit
 
 final class HabitStore: ObservableObject {
     @Published var habits: [Habit] = []
@@ -37,6 +38,7 @@ final class HabitStore: ObservableObject {
             habits[i].completions.remove(today)
         } else {
             habits[i].completions.insert(today)
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         }
         save()
     }
