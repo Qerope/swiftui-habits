@@ -11,6 +11,10 @@ final class HabitStore: ObservableObject {
 
     init() {
         load()
+        NotificationCenter.default.addObserver(
+            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: nil, queue: .main) { [weak self] _ in self?.pullFromCloud() }
+        NSUbiquitousKeyValueStore.default.synchronize()
     }
 
     func load() {
@@ -24,6 +28,9 @@ final class HabitStore: ObservableObject {
             try? data.write(to: url, options: .atomic)
         }
         WidgetCenter.shared.reloadAllTimelines()
+        if let data = try? JSONEncoder().encode(habits) {
+            NSUbiquitousKeyValueStore.default.set(data, forKey: "habits")
+        }
     }
 
     func add(_ name: String) {
@@ -57,5 +64,12 @@ final class HabitStore: ObservableObject {
         let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
         UNUserNotificationCenter.current().add(
             UNNotificationRequest(identifier: habit.id.uuidString, content: content, trigger: trigger))
+    }
+
+    private func pullFromCloud() {
+        guard let data = NSUbiquitousKeyValueStore.default.data(forKey: "habits"),
+              let remote = try? JSONDecoder().decode([Habit].self, from: data) else { return }
+        habits = remote
+        save()
     }
 }
