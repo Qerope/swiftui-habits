@@ -69,7 +69,13 @@ final class HabitStore: ObservableObject {
     private func pullFromCloud() {
         guard let data = NSUbiquitousKeyValueStore.default.data(forKey: "habits"),
               let remote = try? JSONDecoder().decode([Habit].self, from: data) else { return }
-        habits = remote
+        for r in remote {
+            if let i = habits.firstIndex(where: { $0.id == r.id }) {
+                habits[i].completions.formUnion(r.completions)
+            } else {
+                habits.append(r)
+            }
+        }
         save()
     }
 }
