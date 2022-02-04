@@ -4,7 +4,7 @@ struct HabitDetailView: View {
     let habit: Habit
 
     private var week: [Date] {
-        let cal = Calendar(identifier: .gregorian)
+        let cal = Calendar.current
         let start = cal.dateInterval(of: .weekOfYear, for: Date())!.start
         return (0..<7).map { cal.date(byAdding: .day, value: $0, to: start)! }
     }
