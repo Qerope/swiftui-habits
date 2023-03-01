@@ -50,10 +50,13 @@ final class HabitStore: ObservableObject {
         save()
     }
 
-    func delete(at offsets: IndexSet) {
-        habits.remove(atOffsets: offsets)
+    func archive(_ habit: Habit) {
+        guard let i = habits.firstIndex(where: { $0.id == habit.id }) else { return }
+        habits[i].archived = true
         save()
     }
+
+    var active: [Habit] { habits.filter { !$0.archived } }
 
     func scheduleReminder(for habit: Habit, hour: Int) {
         var comps = DateComponents()

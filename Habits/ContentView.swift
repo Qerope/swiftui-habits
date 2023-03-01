@@ -9,18 +9,19 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(store.habits) { habit in
-                    Button { store.toggleToday(habit) } label: {
+                ForEach(store.active) { habit in
+                    NavigationLink(destination: HabitDetailView(habit: habit)) {
                         HStack {
                             Text(habit.name)
                             Spacer()
                             Text("\(habit.streak())")
                                 .foregroundColor(.secondary)
-                            if habit.isDone(on: Date()) { Image(systemName: "checkmark.circle.fill") }
                         }
                     }
+                    .swipeActions {
+                        Button("Archive") { store.archive(habit) }.tint(.orange)
+                    }
                 }
-                .onDelete(perform: store.delete)
             }
             .navigationTitle("Habits")
             .toolbar {
