@@ -2,9 +2,11 @@ import Foundation
 import UserNotifications
 import WidgetKit
 import UIKit
+import Observation
 
-final class HabitStore: ObservableObject {
-    @Published var habits: [Habit] = []
+@Observable
+final class HabitStore {
+    var habits: [Habit] = []
     private let url = FileManager.default
         .containerURL(forSecurityApplicationGroupIdentifier: "group.com.qerope.habits")!
         .appendingPathComponent("habits.json")

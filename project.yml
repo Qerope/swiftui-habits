@@ -5,7 +5,7 @@ targets:
   Habits:
     type: application
     platform: iOS
-    deploymentTarget: "16.0"
+    deploymentTarget: "17.0"
     sources: [Habits]
   HabitsWidget:
     type: app-extension

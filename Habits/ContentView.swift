@@ -2,7 +2,7 @@ import SwiftUI
 import Charts
 
 struct ContentView: View {
-    @EnvironmentObject var store: HabitStore
+    @Environment(HabitStore.self) private var store
     @State private var showingAdd = false
     @State private var newName = ""
 
